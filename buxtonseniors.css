@@ -1,0 +1,254 @@
+
+.darkblueborder{
+    border: 2px solid #005; 
+    border-collapse: collapse;
+}
+
+.results{
+    padding: 0px 20px;
+    text-align: left;
+}
+
+.routes{
+    padding: 0px 5px;
+    border: 1px solid #005; 
+    border-collapse: collapse;
+}
+
+.link{
+    color: blue; 
+    cursor: pointer;
+}
+
+#logo{
+    border: 10px solid #005; 
+}
+
+#separator{
+    width: 100%; 
+    height: 3px; 
+    color: #005; 
+    background-color: #005;
+}
+
+#main-heading{
+    height:52px; 
+    line-height:15px; 
+    padding: 2px;
+    border-top-style:none;
+    border-left-style:none;
+    border-right-style:none;
+    color:#fff;
+}
+
+#mainTable{
+    width:100%; 
+    background-color:#005;
+    text-align:center;
+}
+
+#p.padding{
+    padding-top: 2px ;
+    padding-bottom:15px;
+    padding-left:40px;
+}
+
+#maintext h1{
+    text-align: center;
+    padding:20px
+}
+
+#raceheader{
+    font-weight:bold;
+    font-size: 18px;
+}
+
+#news-headline{
+    font-family:gill sans;
+    font-weight:bold;
+}
+
+#news{
+    font-family:gill sans;
+}
+
+#news:hover{
+    background-color:#d0f0ff;
+    cursor: pointer;
+}
+
+.clickable{
+    color: blue;
+    text-decoration:underline;
+}
+.clickable:hover{
+    cursor: pointer;
+}
+.clickablepicture{
+    color: #005;
+    text-decoration:underline;
+}
+
+.clickablepicture:hover{
+    cursor: pointer;
+}
+
+#wholething{
+    background-color:#d0f0ff;
+}
+
+#wholething input{
+    cursor: pointer;
+}
+
+#section-navigation{
+    float: left;
+    width: 160px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 20px;
+    padding-left: 0px;
+    margin: 0 0;
+    display: inline;
+    valign: top;
+    color:#FFFFFF;
+    font-weight:bold;
+    font-family:gill sans;
+}
+
+#section-navigation ul{
+    display:block;
+    color:#FFFFFF;
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    background-color:#005;
+}
+
+#section-navigation li{
+    display:block;
+    color:#FFFFFF;
+    background-color:#005;
+    text-align:center;
+    text-decoration:none;
+    padding: 5;
+}
+
+#section-navigation li:hover{
+    background-color:#d0f0ff;
+    color: #005;
+}
+
+#section-navigation a:hover{
+    background-color:#d0f0ff;
+    color: #005;
+    text-decoration:none;
+}
+
+#topmenu{
+    height: 30px;
+    display:block;
+    color:#FFFFFF;
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    background-color:#005;
+    valign: middle;
+    color:#FFFFFF;
+    font-weight:bold;
+    font-family:gill sans;
+}
+#topmenu a{
+    text-decoration:none; 
+    color: white; 
+    padding: 20px; 
+    vertical-align: middle;
+}
+#topmenu span:hover{
+    background-color:#d0f0ff;
+    color: #005;
+    padding: 0px;
+}
+
+div.popup{
+    display:none;
+    position:absolute;
+    text-decoration:none;
+}
+
+li.popup:hover+div.popup{
+    display:block;
+}
+
+div.popup:hover{
+    display:block;
+}
+
+.popup{
+    text-decoration:underline;
+    background-color:#d0f0ff;
+    color: #005;
+}
+
+#sidepanel{
+    width: 500px;
+}
+
+#LASTMONTH{color: rgb(200, 200, 200); height: 75px; width: 14%; vertical-align:text-top; cursor: pointer;}
+#TODAY{color: rgb(255, 100, 255); background-color: #dde; height:75px; width: 14%; vertical-align:text-top; cursor: pointer;}
+#THISMONTH{height: 75px; width: 14%; vertical-align:text-top; cursor: pointer;}
+#NEXTMONTH{color: rgb(200, 200, 200); height: 75px; width: 14%; vertical-align:text-top; cursor: pointer;}
+
+.RACE{
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+}
+
+.CHAMPIONSHIP{
+    color: rgb(0, 150, 0);
+    cursor: pointer;
+}
+
+.FELL{
+    color: rgb(125, 0, 125);
+    cursor: pointer;
+}
+
+.XCOUNTRY{
+    color: rgb(150, 55, 17);
+    cursor: pointer;
+}
+
+.FELLCHAMPS{
+    color: rgb(233, 150, 122);
+    cursor: pointer;
+}
+
+.PARKS{
+    color: rgb(0, 0, 255);
+    cursor: pointer;
+}
+
+.inline{
+    display:inline; 
+    margin:0 !important;
+}
+
+.hotspot {cursor:pointer}
+
+#tt {position:absolute; display:block; background:url(images/tt_left.gif) top left no-repeat}
+#tttop {display:block; height:5px; margin-left:5px; background:url(images/tt_top.gif) top right no-repeat; overflow:hidden}
+#ttcont {display:block; padding:2px 12px 3px 7px; margin-left:5px; background:#005; color:#FFF;
+opacity:1.0;
+filter:alpha(opacity=100);}
+#ttbot {display:block; height:5px; margin-left:5px; background:url(images/tt_bottom.gif) top right no-repeat; overflow:hidden}
+
+.menu {background-color:#FFFFFF; position:absolute; opacity:1; filter:alpha(opacity=100); display:block; visibility: hidden; }
+
+#picTable{
+    text-align:center; 
+    color:#005; 
+    font-size: 5em; 
+    height: 100%;
+}
+
