@@ -9,24 +9,47 @@
 </script>
 
 <!-- #map {width: 1000px; height: 700px; border:1px solid -->
+<!-- 200px per grid on map -->
 <style>
   html, body { height: 100%;}
-  #map {width: 800px; height: 700px; border:1px solid 
+  #map {width: 800px; height: 800px; border:1px solid 
   black;}
+  nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:200px;
+    width:300px;
+    float:right;
+    padding:5px;	
+	}
 </style>
-
 </head>  
+
 <!-- function init() in .js file-->
 <body onload="init()">
-  
-<!--  
+
 <h2>My Map</h2>
--->  
+
+<nav>
+	CONSOLE <br>
+	<button type="button" id="myCenter" onclick="centerValue()">FocusCenter</button><br>
+	<button type="button" id="myULeft" onclick="ULeft()">TopLeft</button><br>
+	<button type="button" id="myURight" onclick="URight()">TopRight</button><br>
+	<button type="button" id="myBLeft" onclick="BLeft()">BottomLeft</button><br>
+	<button type="button" id="myBRight" onclick="BRight()">BottomRight</button><br>
+	<input type="button" id="switchMarker" value="Switch Marker On" onclick="try{switchMarker()}catch(e){alert(e)}">
+</nav>
+
 
 <!-- The div below holds the map -->
   
 <div id="map"></div>
 <button type="button" onclick="left()">LEFT</button>
+<button type="button" onclick="right()">RIGHT</button>
+<button type="button" onclick="up()">UP</button>
+<button type="button" onclick="down()">DOWN</button>
+
+
   
 </body>
 </html>
