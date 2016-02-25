@@ -12,12 +12,11 @@
 <!-- 200px per grid on map -->
 <style>
   html, body { height: 100%;}
-  #map {width: 800px; height: 800px; border:1px solid 
-  black;}
+  #map {width: 800px; height: 800px; border:1px solid black;}
   nav {
     line-height:30px;
     background-color:#eeeeee;
-    height:200px;
+    height:300px;
     width:300px;
     float:right;
     padding:5px;	
@@ -28,7 +27,7 @@
 <!-- function init() in .js file-->
 <body onload="init()">
 
-<h2>My Map</h2>
+<h2>My OS Map</h2>
 
 <nav>
 	CONSOLE <br>
@@ -37,6 +36,7 @@
 	<button type="button" id="myURight" onclick="URight()">TopRight</button><br>
 	<button type="button" id="myBLeft" onclick="BLeft()">BottomLeft</button><br>
 	<button type="button" id="myBRight" onclick="BRight()">BottomRight</button><br>
+	<button type="button" id="myLonlatCenter" onclick="point2lonlat()">LonLatCenter</button><br>
 	<input type="button" id="switchMarker" value="Switch Marker On" onclick="try{switchMarker()}catch(e){alert(e)}">
 </nav>
 
