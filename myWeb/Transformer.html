@@ -2,6 +2,11 @@
   <head>
     <title>Transformer</title>
   </head>
+  <script type="text/javascript"
+  src="http://openspace.ordnancesurvey.co.uk/osmapapi/openspace.js?key=CE9B85538994100AE0405F0AC8601AFA">
+  </script>
+  <script type="text/javascript" src="testing.js">
+  </script>
   <script type="text/javascript">
 
   function createCanvas(image){
@@ -17,6 +22,7 @@
     var largest;
     var maxLLength;
     var maxQLength;
+    var pixelList=[];
 
     // set the width and height to the same as the image
     myCanvas.width= imgWidth;
@@ -220,7 +226,7 @@
             maxLLength = list.length;
           else;
 
-          // element too large, set as baclground colour
+          // for elements too large or too small, set as background colour
           if (list.length > 47) {
             for (var i = 0; i < list.length; i++) {
               imageData.data[list[i]]=0;
@@ -230,7 +236,7 @@
             }
             list=[];
           } // if
-          else of (list.length < 4) {
+          else if (list.length < 4) {
             for (var i = 0; i < list.length; i++) {
               imageData.data[list[i]]=0;
               imageData.data[list[i]+1]=0;
@@ -240,17 +246,28 @@
             list=[];
           } // elseif
           // marked as white colour for footpath element
+          // TODO -- PART 3
           else {
             for (var i = 0; i < list.length; i++) {
               imageData.data[list[i]]=255;
               imageData.data[list[i]+1]=255;
               imageData.data[list[i]+2]=255;
+              if (i==0){
+                pixelList[pixelList.length] = (list[i]/4)+1;
+                //document.write("head");
+              }
+              else if (i==(list.length-1)) {
+                pixelList[pixelList.length] = (list[i]/4)+1;
+                //document.write("tail");
+              }
             }
             list=[];
           } 
         } // if
       }
     }
+    document.write(pixelList.length + ": \n");
+    document.write(pixelList);
     //document.write("max index " + largest + "\t");
     //document.write("max queue length " + maxQLength + "\t");     
     //document.write("max list length " + maxLLength + "\t");     
@@ -271,7 +288,8 @@
     {
       createCanvas(img);
     }
-    img.src = "Screen Shot 2016-02-24 at 4.12.51 pm.png";
+    img.src = "Screen Shot 2016-02-24 at 4.12.51 pm.png";    
+    //img.src = "Screen Shot 2016-02-26 at 8.41.20 pm.png";
   }
   </script>
   <body onload="loadImage()"></body>
