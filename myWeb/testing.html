@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>My OS Map</title>
 <script type="text/javascript"
 	src="http://openspace.ordnancesurvey.co.uk/osmapapi/openspace.js?key=CE9B85538994100AE0405F0AC8601AFA">
 	</script>
@@ -10,6 +11,7 @@
 
 <!-- #map {width: 1000px; height: 700px; border:1px solid -->
 <!-- 200px per grid on map -->
+<!-- 5 MapPointUnit per pixel -->
 <style>
   html, body { height: 100%;}
   #map {width: 800px; height: 800px; border:1px solid black;}
@@ -31,15 +33,15 @@
 
 <nav>
 	CONSOLE <br>
-	<button type="button" id="myCenter" onclick="centerValue()">FocusCenter</button><br>
-	<button type="button" id="myULeft" onclick="ULeft()">TopLeft</button><br>
-	<button type="button" id="myURight" onclick="URight()">TopRight</button><br>
-	<button type="button" id="myBLeft" onclick="BLeft()">BottomLeft</button><br>
-	<button type="button" id="myBRight" onclick="BRight()">BottomRight</button><br>
-	<button type="button" id="myLonlatCenter" onclick="point2lonlat()">LonLatCenter</button><br>
+	<button type="button" id="myCenter" onclick="centerValue()" style="font-size: 14px">FocusCenter</button><br>
+	<button type="button" id="myULeft" onclick="ULeft()" style="font-size: 14px">TopLeft</button><br>
+	<button type="button" id="myURight" onclick="URight()" style="font-size: 14px">TopRight</button><br>
+	<button type="button" id="myBLeft" onclick="BLeft()" style="font-size: 14px">BottomLeft</button><br>
+	<button type="button" id="myBRight" onclick="BRight()" style="font-size: 14px">BottomRight</button><br>
 	<input type="button" id="switchMarker" value="Switch Marker On" onclick="try{switchMarker()}catch(e){alert(e)}">
+	<div id="myLonlatCenter" onclick="point2lonlat()" style="font-size: 14px">LonLatCenter</div>
 </nav>
-
+<!-- <button type="button" id="myLonlatCenter" onclick="point2lonlat()">LonLatCenter</button><br> -->
 
 <!-- The div below holds the map -->
   
