@@ -1,0 +1,279 @@
+<html>
+  <head>
+    <title>Transformer</title>
+  </head>
+  <script type="text/javascript">
+
+  function createCanvas(image){
+
+    // create a new canvas element
+    var myCanvas = document.createElement("canvas");
+    var myCanvasContext = myCanvas.getContext("2d");
+
+    var imgWidth=image.width;
+    var imgHeight=image.height;
+    var list=[];
+    var queue=[];
+    var largest;
+    var maxLLength;
+    var maxQLength;
+
+    // set the width and height to the same as the image
+    myCanvas.width= imgWidth;
+    myCanvas.height = imgHeight;
+
+    // draw the image
+    myCanvasContext.drawImage(image,0,0);
+
+    // get all the image data into an array
+    var imageData = myCanvasContext.getImageData(0,0, imgWidth, imgHeight);
+
+    /* 
+    ------------------------------ PART 1------------------------------
+    simple colout filtering, getting rid of colour that is not red
+    regardless of size of pattern
+    just simpliy going through all the pixels on the photo one by one
+    */
+    for (j=0; j<imageData.width; j++)
+    {
+      for (i=0; i<imageData.height; i++)
+      {    
+        // in canvas mat: RGBA
+        // index: red, green, blue, alpha, red, green, blue, alpha..etc.
+        var index=(i*4)*imageData.width+(j*4);
+        if (largest == undefined)
+          largest = index;
+        else if (index > largest) {
+          largest = index;
+        }
+        else;
+
+        var R=imageData.data[index];
+        var G=imageData.data[index+1];
+        var B=imageData.data[index+2];
+        var A=imageData.data[index+3];
+
+        if (R >= 150 && G <= 100 && B <= 200 && B >= 90)
+        {
+          imageData.data[index]=255;
+          imageData.data[index+1]=0;
+          imageData.data[index+2]=0;
+          imageData.data[index+3]=A;
+        }
+
+        else
+        {
+          // set the rest to black
+          imageData.data[index+0]=0;        
+          imageData.data[index+1]=0;
+          imageData.data[index+2]=0;
+          imageData.data[index+3]=A;          
+        }     
+      }
+    } // end of PART 1: colout filtering
+    //document.write(largest[0]);
+
+    for (j=0; j<imageData.width; j++)
+    {
+      for (i=0; i<imageData.height; i++)
+      {
+        var index=(i*4)*imageData.width+(j*4); // 4 * (i * width + j)
+        var R=imageData.data[index];
+        var G=imageData.data[index+1];
+        var B=imageData.data[index+2];
+        var A=imageData.data[index+3];     
+
+        if (R != 0 && B != 255)
+        {
+          list[list.length] = index;
+          queue[queue.length] = index;
+          var point;
+
+          while (queue.length != 0)
+          {
+            point = queue[0]; // set the latest update as target point
+            //document.write(point + " //R:" + imageData.data[point] + " G:" + imageData.data[point+1] + " B:" + imageData.data[point+2] + "//\t");
+            //document.write(point-4*imageData.width-4 + "\t");
+
+            if ((point-4*imageData.width-4) < 0 || (point-4*imageData.width-4) > largest+4);
+              //document.write("Reject top left!\t");
+            else if (imageData.data[point-4*imageData.width-4] == 255 
+                    && imageData.data[point-4*imageData.width-4 + 2] == 0){
+              queue[queue.length] = point-4*imageData.width-4;
+              list[list.length] = point-4*imageData.width-4;
+              imageData.data[point-4*imageData.width-4 +2] = 255;
+              // document.write("//" + (point-4*imageData.width-4) + " R:" + imageData.data[point-4*imageData.width-4] + " G:" + imageData.data[point-4*imageData.width-4+1] + " B:" + imageData.data[point-4*imageData.width-4+2] + "//\t");
+              // document.write(largest + "--" + (point-4*imageData.width-4));   
+            }
+                              
+            // else if (imageData.data[point-4*imageData.width-4] == 255 
+            //         && imageData.data[point-4*imageData.width-4 + 2] == 0) {
+            //   queue[queue.length] = point-4*imageData.width-4;
+            //   list[list.length] = point-4*imageData.width-4;
+            //   imageData.data[point-4*imageData.width-4 +2] == 255;
+            //   document.write("top left, ");   
+            // }
+
+            if ((point-4) < 0 || (point-4) > largest+4);
+              //document.write("Reject left!\t"); 
+            else if (imageData.data[point-4] == 255 
+                    && imageData.data[point-4 + 2] == 0){
+              queue[queue.length] = (point-4);
+              list[list.length] = (point-4);
+              imageData.data[point-4 +2] = 255;
+              //document.write("left, ");  
+            }
+        
+                     
+            // else if (imageData.data[point-4] == 255 
+            //        && imageData.data[point-4 + 2] == 0) {
+            //   queue[queue.length] = point-4;
+            //   list[list.length] = point-4;
+            //   imageData.data[point-4 +2] == 255;
+            //   document.write("left, ");  
+            // }
+
+            if ((point+4*imageData.width-4) < 0 || (point+4*imageData.width-4) > largest+4);
+              //document.write("Reject down left!\t"); 
+            else if (imageData.data[point+4*imageData.width-4] == 255 
+                    && imageData.data[point+4*imageData.width-4 +2] == 0){
+              queue[queue.length] = (point+4*imageData.width-4);
+              list[list.length] = (point+4*imageData.width-4);
+              imageData.data[point+4*imageData.width-4 +2] = 255;
+              //document.write("down left, ");  
+            }
+                                  
+            // else if (imageData.data[point+4*imageData.width-4] == 255 
+            //         && imageData.data[point+4*imageData.width-4 +2] == 0) {
+            //   queue[queue.length] = point+4*imageData.width-4;
+            //   list[list.length] = point+4*imageData.width-4;
+            //   imageData.data[point+4*imageData.width-4 +2] == 255;
+            //   document.write("down left, ");  
+            // }
+
+            if ((point-4*imageData.width) < 0 || (point-4*imageData.width) > largest+4);
+              //document.write("Reject top mid A!\t");                                           
+            else if (imageData.data[point-4*imageData.width] == 255 
+                    && imageData.data[point-4*imageData.width + 2] == 0) {
+              queue[queue.length] = (point-4*imageData.width);
+              list[list.length] = (point-4*imageData.width);
+              imageData.data[point-4*imageData.width +2] = 255;
+              //document.write("top mid, ");
+            }  
+
+            if ((point+4*imageData.width) < 0 || (point+4*imageData.width) > largest+4);
+              //document.write("Reject down mid!\t");                                      
+            else if (imageData.data[point+4*imageData.width] == 255 
+                      && imageData.data[point+4*imageData.width+2] == 0) {
+               queue[queue.length] = (point+4*imageData.width); // ATTENTION NEEDED!!!!!!
+               list[list.length] = (point+4*imageData.width);
+               imageData.data[(point+4*imageData.width) +2] = 255;
+               // document.write("//" + (point+4*imageData.width) + " R:" + imageData.data[point+4*imageData.width] + " G:" + imageData.data[point+4*imageData.width+1] + " B:" + imageData.data[point+4*imageData.width+2] + "//\t");
+               // document.write(" " + largest + "--" + (point+4*imageData.width));   
+               //document.write("down mid " + point+4*imageData.width + ", ");  
+             }  
+
+            if (point-4*imageData.width+4 < 0 || point-4*imageData.width+4 > largest+4);
+               //document.write("Reject top right!\t");                                          
+            else if (imageData.data[point-4*imageData.width+4] == 255 
+                     && imageData.data[point-4*imageData.width+4 + 2] == 0) {
+               queue[queue.length] = point-4*imageData.width+4; // ATTENTION NEEDED!!!!!!
+               list[list.length] = point-4*imageData.width+4;
+               imageData.data[point-4*imageData.width+4 +2] = 255;
+               //document.write("top right, ");  
+            } 
+
+            if (point+4 < 0 || point+4 > largest+4);
+               //document.write("Reject right!\t");                         
+            else if (imageData.data[point+4] == 255 
+                     && imageData.data[point+4 + 2] == 0) {
+               queue[queue.length] = point+4; // ATTENTION NEEDED!!!!!!
+               list[list.length] = point+4;
+               imageData.data[point+4 +2] = 255;
+               //document.write("right, ");  
+            } 
+
+            if (point+4*imageData.width+4 < 0 || point+4*imageData.width+4 > largest+4);
+               //document.write("Reject down right!\t");                                  
+             else if (imageData.data[point+4*imageData.width+4] == 255
+                     && imageData.data[point+4*imageData.width+4 + 2] == 0) {            
+               queue[queue.length] = point+4*imageData.width+4; // ATTENTION NEEDED!!!!!!
+               list[list.length] = point+4*imageData.width+4;
+               imageData.data[point+4*imageData.width+4 +2] = 255;
+               //document.write("down right, ");  
+            } 
+            if (maxQLength == undefined)
+              maxQLength = queue.length;
+            else if (queue.length > maxQLength)
+              maxQLength = queue.length;
+            else;
+   
+            queue.splice (0,1); 
+            //document.write("queue length b: " + queue.length + "\t");      
+  
+          } // while (queue.length != 0) 
+
+          //document.write("end list " + list.length + "\t");   
+          if (maxLLength == undefined)
+            maxLLength = list.length;
+          else if (list.length > maxLLength)
+            maxLLength = list.length;
+          else;
+
+          // element too large, set as baclground colour
+          if (list.length > 47) {
+            for (var i = 0; i < list.length; i++) {
+              imageData.data[list[i]]=0;
+              imageData.data[list[i]+1]=0;
+              imageData.data[list[i]+2]=0;
+              //document.write("gg");
+            }
+            list=[];
+          } // if
+          else of (list.length < 4) {
+            for (var i = 0; i < list.length; i++) {
+              imageData.data[list[i]]=0;
+              imageData.data[list[i]+1]=0;
+              imageData.data[list[i]+2]=0;
+              //document.write("gg");
+            }
+            list=[];
+          } // elseif
+          // marked as white colour for footpath element
+          else {
+            for (var i = 0; i < list.length; i++) {
+              imageData.data[list[i]]=255;
+              imageData.data[list[i]+1]=255;
+              imageData.data[list[i]+2]=255;
+            }
+            list=[];
+          } 
+        } // if
+      }
+    }
+    //document.write("max index " + largest + "\t");
+    //document.write("max queue length " + maxQLength + "\t");     
+    //document.write("max list length " + maxLLength + "\t");     
+    
+    //Reject top mid!  Reject down mid! Reject top right!  Reject right!  Reject down right!
+    // put the image data back into the canvas
+    myCanvasContext.putImageData(imageData,0,0,0,0, imageData.height, imageData.width);
+
+    // append it to the body
+    document.body.appendChild(myCanvas);
+  }
+
+  function loadImage()
+  {
+    var img = new Image();
+    //img.crossOrigin = 'anonymous';
+    img.onload = function ()
+    {
+      createCanvas(img);
+    }
+    img.src = "Screen Shot 2016-02-24 at 4.12.51 pm.png";
+  }
+  </script>
+  <body onload="loadImage()"></body>
+
+</html>

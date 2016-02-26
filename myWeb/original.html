@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+  <body>
+    <canvas id="myCanvas" width="2000" height="2000"></canvas>
+    <script>
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      var imageObj = new Image();
+      imageObj.src = 'Screen Shot 2016-02-24 at 4.12.51 pm.png';
+      var imgWidth=imageObj.width;
+      var imgHeight=imageObj.height;
+ //     var w = imgWidth.toString();
+ //     var h = imgHeight.toString();
+ //     canvas.height = imgHeight;
+ //     canvas.width = imgWidth;
+
+      imageObj.onload = function() {
+        context.drawImage(imageObj, 0, 0);
+      };
+
+    </script>
+  </body>
+</html>   
