@@ -5,6 +5,8 @@
 <script type="text/javascript"
 	src="http://openspace.ordnancesurvey.co.uk/osmapapi/openspace.js?key=CE9B85538994100AE0405F0AC8601AFA">
 	</script>
+  	<script src="https://maps.googleapis.com/maps/api/js?callback=initGMap"
+    	async defer></script>
 	<script type="text/javascript" src="testing.js">
 	</script>
 </script>
@@ -14,7 +16,8 @@
 <!-- 5 MapPointUnit per pixel -->
 <style>
   html, body { height: 100%;}
-  #map {width: 800px; height: 800px; border:1px solid black;}
+  #OSmap {width: 800px; height: 800px; float:left; border:1px solid black;}
+  #Gmap {width: 500px; height: 500px; float:right;}  
   nav {
     line-height:30px;
     background-color:#eeeeee;
@@ -27,7 +30,7 @@
 </head>  
 
 <!-- function init() in .js file-->
-<body onload="init()">
+<body onload="initOSMap()">
 
 <h2>My OS Map</h2>
 
@@ -38,18 +41,19 @@
 	<button type="button" id="myURight" onclick="URight()" style="font-size: 14px">TopRight</button><br>
 	<button type="button" id="myBLeft" onclick="BLeft()" style="font-size: 14px">BottomLeft</button><br>
 	<button type="button" id="myBRight" onclick="BRight()" style="font-size: 14px">BottomRight</button><br>
-	<input type="button" id="switchMarker" value="Switch Marker On" onclick="try{switchMarker()}catch(e){alert(e)}">
+	<input type="button" id="switchMarker" value="Switch Marker On" onclick="try{switchMarker()}catch(e){alert(e)}"></input>
 	<div id="myLonlatCenter" onclick="point2lonlat()" style="font-size: 14px">LonLatCenter</div>
 </nav>
 <!-- <button type="button" id="myLonlatCenter" onclick="point2lonlat()">LonLatCenter</button><br> -->
 
 <!-- The div below holds the map -->
   
-<div id="map"></div>
+<div id="OSmap"></div>
 <button type="button" onclick="left()">LEFT</button>
 <button type="button" onclick="right()">RIGHT</button>
 <button type="button" onclick="up()">UP</button>
 <button type="button" onclick="down()">DOWN</button>
+<div id="Gmap"></div>
 
 
   

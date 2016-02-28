@@ -9,10 +9,10 @@ var lat;
 
 
 // This function creates the map and is called by the div in the HTML
-function init()
+function initOSMap()
 {
     // Create new map
-    osMap = new OpenSpace.Map('map');
+    osMap = new OpenSpace.Map('OSmap');
     mapPointX = 400000;
     mapPointY = 400000;
     focusPoint = new OpenSpace.MapPoint(mapPointX, mapPointY);
@@ -20,6 +20,15 @@ function init()
     // Set map centre in National Grid Eastings and Northings and select zoom level 8
 	osMap.setCenter(focusPoint, 8);            
 }
+
+function initGMap() {
+	var mapDiv = document.getElementById('Gmap');
+    GMAP = new google.maps.Map(mapDiv, {
+        center: {lat: 53.496718204694, lng: -2.0014692557496},
+        zoom: 14
+    });
+}
+
 
 // Assign a new markers layer to a variable 
 var markers = new OpenLayers.Layer.Markers("Markers");
@@ -170,6 +179,19 @@ function point2lonlat(){
     catch(e){
 		error(e, "point2lonlat");
     }	
+}
+
+function mapcanvas(){
+    try{
+	var size = gmapSize();
+	// if(USINGLARGEOS){
+	//     document.write('<div id="LargeOSMAP" style="width:'+size['W']+'px; height: 1px; visibility: hidden"></div>');
+	// }
+	document.write('<div id="GMAP" style="width:'+630+'px; height: '+460+'px; visibility: visible"></div>');
+    }
+    catch(e){
+	error(e, "mapcanvas");
+    }
 }
 
 

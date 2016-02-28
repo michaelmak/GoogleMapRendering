@@ -1,10 +1,19 @@
 <html>
   <head>
     <title>Transformer</title>
+    <style>
+      #Gmap {
+        width: 600px;
+        height: 600px;
+        float:right;
+      }
+    </style>
   </head>
   <script type="text/javascript"
   src="http://openspace.ordnancesurvey.co.uk/osmapapi/openspace.js?key=CE9B85538994100AE0405F0AC8601AFA">
   </script>
+  <script src="https://maps.googleapis.com/maps/api/js?callback=initGMap"
+    async defer></script>
   <script type="text/javascript" src="testing.js">
   </script>
   <script type="text/javascript">
@@ -264,10 +273,10 @@
             list=[];
           } 
         } // if
-      }
-    }
-    document.write(pixelList.length + ": \n");
-    document.write(pixelList);
+      } // for 
+    } // for
+    //document.write(pixelList.length + ": \n");
+    //document.write(pixelList);
     //document.write("max index " + largest + "\t");
     //document.write("max queue length " + maxQLength + "\t");     
     //document.write("max list length " + maxLLength + "\t");     
@@ -288,10 +297,22 @@
     {
       createCanvas(img);
     }
-    img.src = "Screen Shot 2016-02-24 at 4.12.51 pm.png";    
+    /*
+    1Grid: 
+    upLeft   = 399000,400000
+    upRight  = 400000,400000
+    downLeft = 399000,399000
+    downLeft = 400000,399000
+    */
+    img.src = '1Grid.png';
+    //img.src = "Screen Shot 2016-02-24 at 4.12.51 pm.png";    
     //img.src = "Screen Shot 2016-02-26 at 8.41.20 pm.png";
   }
+
   </script>
-  <body onload="loadImage()"></body>
+
+  <body onload="loadImage()">
+  <div id="Gmap"></div>
+  </body>
 
 </html>
