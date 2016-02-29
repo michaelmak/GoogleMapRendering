@@ -7,6 +7,9 @@ var focusPoint;
 var lon;
 var lat;
 
+function error(e, s){
+    alert(e+" in "+s);
+}
 
 // This function creates the map and is called by the div in the HTML
 function initOSMap()
@@ -178,6 +181,16 @@ function point2lonlat(){
 	}
     catch(e){
 		error(e, "point2lonlat");
+    }	
+}
+
+function point2lonlat(point){
+	try{
+		var lonlat = osMap.gridProjection.getLonLatFromMapPoint(point);
+		return lonlat;
+	}
+    catch(e){
+		error(e, "point2lonlat(point)");
     }	
 }
 

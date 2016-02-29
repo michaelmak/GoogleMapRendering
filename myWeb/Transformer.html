@@ -16,8 +16,17 @@
     async defer></script>
   <script type="text/javascript" src="testing.js">
   </script>
+  <script type="text/javascript" src="gmaps.js">
+  </script>
+  <body>
+  <div id="Gmap"></div>
+  </body>
   <script type="text/javascript">
+  initOSMap();
 
+  var pixelList=[];
+  var mapPointList = [];
+  var lonlatList = [];
   function createCanvas(image){
 
     // create a new canvas element
@@ -31,7 +40,7 @@
     var largest;
     var maxLLength;
     var maxQLength;
-    var pixelList=[];
+    
 
     // set the width and height to the same as the image
     myCanvas.width= imgWidth;
@@ -88,9 +97,9 @@
     } // end of PART 1: colout filtering
     //document.write(largest[0]);
 
-    for (j=0; j<imageData.width; j++)
+    for (j=0; j<imageData.height; j++)
     {
-      for (i=0; i<imageData.height; i++)
+      for (i=0; i<imageData.width; i++)
       {
         var index=(i*4)*imageData.width+(j*4); // 4 * (i * width + j)
         var R=imageData.data[index];
@@ -283,6 +292,7 @@
     
     //Reject top mid!  Reject down mid! Reject top right!  Reject right!  Reject down right!
     // put the image data back into the canvas
+    pixel2mapPoint();
     myCanvasContext.putImageData(imageData,0,0,0,0, imageData.height, imageData.width);
 
     // append it to the body
@@ -304,15 +314,79 @@
     downLeft = 399000,399000
     downLeft = 400000,399000
     */
-    img.src = '1Grid.png';
+    //img.src = '1Grid.png';
+    img.src = '4Grids.png';
     //img.src = "Screen Shot 2016-02-24 at 4.12.51 pm.png";    
+    //img.src = "Screen Shot 2016-02-25 at 10.53.04 pm.png";   
     //img.src = "Screen Shot 2016-02-26 at 8.41.20 pm.png";
   }
+
+  function mapPoint2lonlat(point)
+  {
+    return point2lonlat(point);
+  }
+
+  function pixel2mapPoint()
+  {
+    for (i = 0; i<pixelList.length; i++)
+    {
+      var pixelNumber = pixelList[i];
+      var mapPointX = pixelNumber%400*2 + 399000; // attention needed
+      var mapPointY = (pixelNumber-(pixelNumber%400))/400*(-2) + 401000;  // attention needed 
+      var mapPointXY = new OpenSpace.MapPoint(mapPointX, mapPointY);
+      var lonlat = mapPoint2lonlat(mapPointXY);
+      //document.write(lonlatList);
+      lonlatList.push(lonlat);
+    }
+    plotLonlat2Gmap();
+  }
+
+  function plotLonlat2Gmap()
+  {
+    try{
+        var mapDiv = document.getElementById('Gmap');
+        var GMAP = new google.maps.Map(mapDiv, {
+                  center: {lat: 53.496718204694, lng: -2.0014692557496},
+                  zoom: 14
+        });
+        //document.write(lonlatList);
+        for (i = 0; i<lonlatList.length; i=i+2)
+        {
+          var lon1 = lonlatList[i].lon;
+          var lat1 = lonlatList[i].lat;
+          var lon2 = lonlatList[i+1].lon;
+          var lat2 = lonlatList[i+1].lat;
+          var footpathCoordinates = [
+            {lng: lon1, lat: lat1},
+            {lng: lon2, lat: lat2}
+            ];
+
+          var footpathFragment = new google.maps.Polyline({
+            path: footpathCoordinates,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+            });
+
+          // Gmap.drawPolyline({
+          //   path: footpathCoordinates,
+          //   strokeColor: '#131540',
+          //   strokeOpacity: 0.6,
+          //   strokeWeight: 6
+          // });
+          footpathFragment.setMap(GMAP);
+        }
+      }
+    catch(e){
+      error(e, "plotLonlat2Gmap");
+    }
+  }
+
 
   </script>
 
   <body onload="loadImage()">
-  <div id="Gmap"></div>
   </body>
 
 </html>
