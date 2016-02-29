@@ -171,7 +171,7 @@ function switchMarker(){
     }
 }
 
-function point2lonlat(){
+function point2LonLat(){
 	try{
 		updateMapPoint();
 		var lonlat = osMap.gridProjection.getLonLatFromMapPoint(focusPoint);

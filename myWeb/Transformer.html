@@ -27,14 +27,16 @@
   var pixelList=[];
   var mapPointList = [];
   var lonlatList = [];
+  var imgWidth;
+  var imgHeight
   function createCanvas(image){
 
     // create a new canvas element
     var myCanvas = document.createElement("canvas");
     var myCanvasContext = myCanvas.getContext("2d");
 
-    var imgWidth=image.width;
-    var imgHeight=image.height;
+    imgWidth=image.width;
+    imgHeight=image.height;
     var list=[];
     var queue=[];
     var largest;
@@ -315,7 +317,8 @@
     downLeft = 400000,399000
     */
     //img.src = '1Grid.png';
-    img.src = '4Grids.png';
+    //img.src = '4Grids.png';
+    img.src = '9Grids.png';
     //img.src = "Screen Shot 2016-02-24 at 4.12.51 pm.png";    
     //img.src = "Screen Shot 2016-02-25 at 10.53.04 pm.png";   
     //img.src = "Screen Shot 2016-02-26 at 8.41.20 pm.png";
@@ -330,9 +333,14 @@
   {
     for (i = 0; i<pixelList.length; i++)
     {
+      var originalX = 399000; // input
+      var originalY = 401000; // input
+      var pixelWidth = imgWidth;
+      var pixelHeight = imgHeight;
+
       var pixelNumber = pixelList[i];
-      var mapPointX = pixelNumber%400*2 + 399000; // attention needed
-      var mapPointY = (pixelNumber-(pixelNumber%400))/400*(-2) + 401000;  // attention needed 
+      var mapPointX = (pixelNumber%pixelWidth)*2.5 + originalX; // attention needed
+      var mapPointY = (pixelNumber-(pixelNumber%pixelHeight))/pixelHeight*(-2.5) + originalY;  // attention needed 
       var mapPointXY = new OpenSpace.MapPoint(mapPointX, mapPointY);
       var lonlat = mapPoint2lonlat(mapPointXY);
       //document.write(lonlatList);
@@ -365,16 +373,10 @@
             path: footpathCoordinates,
             geodesic: true,
             strokeColor: '#FF0000',
-            strokeOpacity: 1.0,
+            strokeOpacity: 0.5,
             strokeWeight: 2
             });
 
-          // Gmap.drawPolyline({
-          //   path: footpathCoordinates,
-          //   strokeColor: '#131540',
-          //   strokeOpacity: 0.6,
-          //   strokeWeight: 6
-          // });
           footpathFragment.setMap(GMAP);
         }
       }
