@@ -6,6 +6,7 @@ var mapPointY;
 var focusPoint;
 var lon;
 var lat;
+var ULeftCoodinate;
 
 function error(e, s){
     alert(e+" in "+s);
@@ -213,4 +214,9 @@ function syncGMap(){
     }	
 }
 
-
+function saveCoordinate(){
+	updateLocation();
+	ULeftCoodinate = new OpenSpace.MapPoint(mapPointX-1000, mapPointY+2000);
+	var blobXY = new Blob([ULeftCoodinate], {type: "text/plain;charset=utf-8"});
+	saveAs(blobXY, "originCoordinate.txt");
+}

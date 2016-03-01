@@ -9,6 +9,8 @@
     	async defer></script>
 	<script type="text/javascript" src="testing.js">
 	</script>
+	<script type="text/javascript" src="FileSaver.js">
+  	</script>
 <!-- #map {width: 1000px; height: 700px; border:1px solid -->
 <!-- 200px per grid on map -->
 <!-- 5 MapPointUnit per pixel -->
@@ -40,6 +42,7 @@
 	<button type="button" id="myBLeft" onclick="BLeft()" style="font-size: 14px">BottomLeft</button><br>
 	<button type="button" id="myBRight" onclick="BRight()" style="font-size: 14px">BottomRight</button><br>
 	<button type="button" id="syncGMap" onclick="syncGMap()" style="font-size: 14px">syncGMap</button><br>
+	<button type="button" id="outputCoordinate" onclick="saveCoordinate()" style="font-size: 14px">outputCoordinate</button><br>
 	<input type="button" id="switchMarker" value="Switch Marker On" onclick="try{switchMarker()}catch(e){alert(e)}"></input>
 	<div id="myLonlatCenter" onclick="point2LonLat()" style="font-size: 14px">LonLatCenter</div>
 </nav>
@@ -52,17 +55,7 @@
 <button type="button" onclick="right()">RIGHT</button>
 <button type="button" onclick="up()">UP</button>
 <button type="button" onclick="down()">DOWN</button>
-<div id="Gmap"></div>
-
-<?php
-$myfile = fopen("newfile.txt", "w") or die("Unable to open file!");
-$txt = "Mickey Mouse\n";
-fwrite($myfile, $txt);
-$txt = "Minnie Mouse\n";
-fwrite($myfile, $txt);
-fclose($myfile);
-?>
-  
+<div id="Gmap"></div>  
 </body>
 
 

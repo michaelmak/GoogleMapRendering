@@ -16,7 +16,7 @@
     async defer></script>
   <script type="text/javascript" src="testing.js">
   </script>
-  <script type="text/javascript" src="gmaps.js">
+  <script type="text/javascript" src="FileSaver.js">
   </script>
   <body>
   <div id="Gmap"></div>
@@ -323,11 +323,12 @@
     downLeft = 399000,399000
     downLeft = 400000,399000
     */
+    //img.src = 'screenshot.png';
     //img.src = '1Grid.png';
     //img.src = '4Grids.png';
     //img.src = '4Grids 406000 408005.png';
-    //img.src = '9Grids 399000 401000.png';
-    img.src = '9Grids 406000 408005.png';
+    img.src = '9Grids 399000 401000.png';
+    //img.src = '9Grids 406000 408005.png';
     //img.src = 'Screen Shot 2016-03-01 at 3.21.33 pm.png'; //405005 410005
     //img.src = 'Screen Shot 2016-03-01 at 5.14.05 pm.png'; //419000 402000
     //img.src = 'Screen Shot 2016-03-01 at 3.21.33 pm.png'; //405005 410005
@@ -349,8 +350,8 @@
   var lonlat;
   function pixel2mapPoint()
   {
-    var originalX = 406000; // input
-    var originalY = 408005; // input
+    var originalX = 399000; // input
+    var originalY = 401000; // input
     var pixelWidth = imgWidth;
     var pixelHeight = imgHeight;
     imgSize = imgWidth*imgHeight;
@@ -378,6 +379,7 @@
 
   function plotLonlat2Gmap()
   {
+    //file=fopen("newfile.txt");
     try{
         var mapDiv = document.getElementById('Gmap');
         var GMAP = new google.maps.Map(mapDiv, {
