@@ -21,7 +21,7 @@ function initOSMap()
     focusPoint = new OpenSpace.MapPoint(mapPointX, mapPointY);
     osMap.gridProjection = new OpenSpace.GridProjection();
     // Set map centre in National Grid Eastings and Northings and select zoom level 8
-	osMap.setCenter(focusPoint, 8);            
+	osMap.setCenter(focusPoint, 8);       
 }
 
 function initGMap() {
@@ -64,11 +64,19 @@ function down()
 	osMap.setCenter(focusPoint, 8);
 }
 
-function updateMapPoint()
+function updateLocation()
 {
-	focusPoint = osMap.getCenter();
-	mapPointX = focusPoint.getEasting();
-	mapPointY = focusPoint.getNorthing();
+	try{
+		focusPoint = osMap.getCenter();
+		mapPointX = focusPoint.getEasting();
+		mapPointY = focusPoint.getNorthing();
+		var lonlat = osMap.gridProjection.getLonLatFromMapPoint(focusPoint);
+		lon = lonlat.lon;
+		lat = lonlat.lat;		
+	}
+    catch(e){
+		error(e, "updateLocation");
+    }	
 }
 
 function centerValue()
@@ -76,11 +84,11 @@ function centerValue()
 	//var myCenter=document.getElementById("myCenter");
 	//document.write(osMap.getCenter());
 	try{
-	updateMapPoint();
-    document.getElementById("myCenter").innerHTML = "Focus Center: X " + mapPointX + " Y " + mapPointY;
-	var pos = new OpenSpace.MapPoint(mapPointX, mapPointY);
-	var marker = new OpenLayers.Marker(pos);
-    markers.addMarker(marker);
+		updateLocation();
+	    document.getElementById("myCenter").innerHTML = "Focus Center: X " + mapPointX + " Y " + mapPointY;
+		var pos = new OpenSpace.MapPoint(mapPointX, mapPointY);
+		var marker = new OpenLayers.Marker(pos);
+	    markers.addMarker(marker);
 	}
     catch(e){
 		error(e, "centerValue");
@@ -92,7 +100,7 @@ function ULeft()
 	//var myCenter=document.getElementById("myCenter");
 	//document.write(osMap.getCenter());
 	try{
-		updateMapPoint();
+		updateLocation();
 		document.getElementById("myULeft").innerHTML = "Upper Left: X " + (mapPointX-1000) + " Y " + (mapPointY+2000);
 		var pos = new OpenSpace.MapPoint(mapPointX-1000, mapPointY+2000);
 		var marker = new OpenLayers.Marker(pos);
@@ -109,7 +117,7 @@ function URight()
 	//var myCenter=document.getElementById("myCenter");
 	//document.write(osMap.getCenter());
 	try{
-		updateMapPoint();	
+		updateLocation();	
 		document.getElementById("myURight").innerHTML = "Upper Right: X " + (mapPointX+2000) + " Y " + (mapPointY+2000);
 		var pos = new OpenSpace.MapPoint(mapPointX+2000, mapPointY+2000);
 		var marker = new OpenLayers.Marker(pos);
@@ -126,7 +134,7 @@ function BLeft()
 	//var myCenter=document.getElementById("myCenter");
 	//document.write(osMap.getCenter());
 	try{
-		updateMapPoint();
+		updateLocation();
 		document.getElementById("myBLeft").innerHTML = "Bottom Left: X " + (mapPointX-1000) + " Y " + (mapPointY-1000);
 		var pos = new OpenSpace.MapPoint(mapPointX-1000, mapPointY-1000);
 		var marker = new OpenLayers.Marker(pos);
@@ -143,7 +151,7 @@ function BRight()
 	//var myCenter=document.getElementById("myCenter");
 	//document.write(osMap.getCenter());
 	try{
-		updateMapPoint();
+		updateLocation();
 		document.getElementById("myBRight").innerHTML = "Bottom Right: X " + (mapPointX+2000) + " Y " + (mapPointY-1000);
 		var pos = new OpenSpace.MapPoint(mapPointX+2000, mapPointY-1000);
 		var marker = new OpenLayers.Marker(pos);
@@ -173,10 +181,7 @@ function switchMarker(){
 
 function point2LonLat(){
 	try{
-		updateMapPoint();
-		var lonlat = osMap.gridProjection.getLonLatFromMapPoint(focusPoint);
-		lon = lonlat.lon;
-		lat = lonlat.lat;
+		updateLocation();
 		document.getElementById("myLonlatCenter").innerHTML = "LonLat Center: lon " + lon + " lat " + lat;
 	}
     catch(e){
@@ -194,17 +199,18 @@ function point2lonlat(point){
     }	
 }
 
-function mapcanvas(){
+function syncGMap(){
     try{
-	var size = gmapSize();
-	// if(USINGLARGEOS){
-	//     document.write('<div id="LargeOSMAP" style="width:'+size['W']+'px; height: 1px; visibility: hidden"></div>');
-	// }
-	document.write('<div id="GMAP" style="width:'+630+'px; height: '+460+'px; visibility: visible"></div>');
+    	updateLocation();
+		var mapDiv = document.getElementById('Gmap');
+	    GMAP = new google.maps.Map(mapDiv, {
+	        center: {lat: lat, lng: lon},
+	        zoom: 14
+	    });		
     }
     catch(e){
-	error(e, "mapcanvas");
-    }
+		error(e, "mapcanvas");
+    }	
 }
 
 

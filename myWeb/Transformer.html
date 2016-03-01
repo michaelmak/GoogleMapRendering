@@ -28,7 +28,8 @@
   var mapPointList = [];
   var lonlatList = [];
   var imgWidth;
-  var imgHeight
+  var imgHeight;
+  var imgSize;
   function createCanvas(image){
 
     // create a new canvas element
@@ -37,6 +38,7 @@
 
     imgWidth=image.width;
     imgHeight=image.height;
+
     var list=[];
     var queue=[];
     var largest;
@@ -98,7 +100,7 @@
       }
     } // end of PART 1: colout filtering
     //document.write(largest[0]);
-
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! BUG: height>width !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     for (j=0; j<imageData.height; j++)
     {
       for (i=0; i<imageData.width; i++)
@@ -247,7 +249,7 @@
           else;
 
           // for elements too large or too small, set as background colour
-          if (list.length > 47) {
+          if (list.length > 90) {
             for (var i = 0; i < list.length; i++) {
               imageData.data[list[i]]=0;
               imageData.data[list[i]+1]=0;
@@ -272,15 +274,20 @@
               imageData.data[list[i]]=255;
               imageData.data[list[i]+1]=255;
               imageData.data[list[i]+2]=255;
+              var largestInList = 0;
               if (i==0){
                 pixelList[pixelList.length] = (list[i]/4)+1;
                 //document.write("head");
               }
-              else if (i==(list.length-1)) {
-                pixelList[pixelList.length] = (list[i]/4)+1;
-                //document.write("tail");
-              }
+              // else if (i==(list.length-1)) {
+              //   pixelList[pixelList.length] = (list[i]/4)+1;
+              //   //document.write("tail");
+              // }
+               else if ((list[i]/4)+1 > largestInList)
+                 largestInList = (list[i]/4)+1;
+
             }
+            pixelList[pixelList.length] = largestInList;
             list=[];
           } 
         } // if
@@ -318,31 +325,51 @@
     */
     //img.src = '1Grid.png';
     //img.src = '4Grids.png';
-    img.src = '9Grids.png';
+    //img.src = '4Grids 406000 408005.png';
+    //img.src = '9Grids 399000 401000.png';
+    img.src = '9Grids 406000 408005.png';
+    //img.src = 'Screen Shot 2016-03-01 at 3.21.33 pm.png'; //405005 410005
+    //img.src = 'Screen Shot 2016-03-01 at 5.14.05 pm.png'; //419000 402000
+    //img.src = 'Screen Shot 2016-03-01 at 3.21.33 pm.png'; //405005 410005
     //img.src = "Screen Shot 2016-02-24 at 4.12.51 pm.png";    
     //img.src = "Screen Shot 2016-02-25 at 10.53.04 pm.png";   
     //img.src = "Screen Shot 2016-02-26 at 8.41.20 pm.png";
   }
 
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 100% CPU used !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   function mapPoint2lonlat(point)
   {
     return point2lonlat(point);
   }
-
+  var GMapCenterLon;
+  var GMapCenterLat;
+  var mapPointX;
+  var mapPointY;
+  var mapPointXY;
+  var lonlat;
   function pixel2mapPoint()
   {
+    var originalX = 406000; // input
+    var originalY = 408005; // input
+    var pixelWidth = imgWidth;
+    var pixelHeight = imgHeight;
+    imgSize = imgWidth*imgHeight;
+    // find the center lonlat for google map
+    mapPointX = ((0.5*imgSize)%pixelWidth)*2.5 + originalX; // attention needed
+    mapPointY = ((0.5*imgSize)-((0.5*imgSize)%pixelHeight))/pixelHeight*(-2.5) + originalY;  
+    mapPointXY = new OpenSpace.MapPoint(mapPointX, mapPointY);
+    lonlat = mapPoint2lonlat(mapPointXY);
+    GMapCenterLon = lonlat.lon;
+    GMapCenterLat = lonlat.lat;
+    //document.write(GMapCenterLon);
+    //process data in the pixel list   
     for (i = 0; i<pixelList.length; i++)
     {
-      var originalX = 399000; // input
-      var originalY = 401000; // input
-      var pixelWidth = imgWidth;
-      var pixelHeight = imgHeight;
-
       var pixelNumber = pixelList[i];
-      var mapPointX = (pixelNumber%pixelWidth)*2.5 + originalX; // attention needed
-      var mapPointY = (pixelNumber-(pixelNumber%pixelHeight))/pixelHeight*(-2.5) + originalY;  // attention needed 
-      var mapPointXY = new OpenSpace.MapPoint(mapPointX, mapPointY);
-      var lonlat = mapPoint2lonlat(mapPointXY);
+      mapPointX = (pixelNumber%pixelWidth)*2.5 + originalX; // attention needed
+      mapPointY = (pixelNumber-(pixelNumber%pixelHeight))/pixelHeight*(-2.5) + originalY;  // attention needed 
+      mapPointXY = new OpenSpace.MapPoint(mapPointX, mapPointY);
+      lonlat = mapPoint2lonlat(mapPointXY);
       //document.write(lonlatList);
       lonlatList.push(lonlat);
     }
@@ -354,8 +381,9 @@
     try{
         var mapDiv = document.getElementById('Gmap');
         var GMAP = new google.maps.Map(mapDiv, {
-                  center: {lat: 53.496718204694, lng: -2.0014692557496},
-                  zoom: 14
+                  //center: {lat: 53.496718204694, lng: -2.0014692557496},
+                  center: {lat: GMapCenterLat, lng: GMapCenterLon},
+                  zoom: 13
         });
         //document.write(lonlatList);
         for (i = 0; i<lonlatList.length; i=i+2)
