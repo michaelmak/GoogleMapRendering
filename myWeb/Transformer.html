@@ -66,6 +66,8 @@
     {
       for (i=0; i<imageData.height; i++)
       {    
+        // if (i == imageData.height-1)
+        //   document.write(j);
         // in canvas mat: RGBA
         // index: red, green, blue, alpha, red, green, blue, alpha..etc.
         var index=(i*4)*imageData.width+(j*4);
@@ -99,11 +101,10 @@
         }     
       }
     } // end of PART 1: colout filtering
-    //document.write(largest[0]);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! BUG: height>width !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    for (j=0; j<imageData.height; j++)
+    for (j=0; j<imageData.width; j++)
     {
-      for (i=0; i<imageData.width; i++)
+      for (i=0; i<imageData.height; i++)
       {
         var index=(i*4)*imageData.width+(j*4); // 4 * (i * width + j)
         var R=imageData.data[index];
@@ -240,6 +241,7 @@
             //document.write("queue length b: " + queue.length + "\t");      
   
           } // while (queue.length != 0) 
+          //======================================TESTED========================================
 
           //document.write("end list " + list.length + "\t");   
           if (maxLLength == undefined)
@@ -276,18 +278,18 @@
               imageData.data[list[i]+2]=255;
               var largestInList = 0;
               if (i==0){
-                pixelList[pixelList.length] = (list[i]/4)+1;
+                pixelList[pixelList.length] = (list[i]/4);
                 //document.write("head");
               }
-              // else if (i==(list.length-1)) {
-              //   pixelList[pixelList.length] = (list[i]/4)+1;
-              //   //document.write("tail");
-              // }
-               else if ((list[i]/4)+1 > largestInList)
-                 largestInList = (list[i]/4)+1;
+              else if (i==(list.length-1)) {
+                pixelList[pixelList.length] = (list[i]/4);
+                //document.write("tail");
+              }
+               // else if ((list[i]/4)+1 > largestInList)
+               //   largestInList = (list[i]/4)+1;
 
             }
-            pixelList[pixelList.length] = largestInList;
+            //pixelList[pixelList.length] = largestInList;
             list=[];
           } 
         } // if
@@ -302,7 +304,7 @@
     //Reject top mid!  Reject down mid! Reject top right!  Reject right!  Reject down right!
     // put the image data back into the canvas
     pixel2mapPoint();
-    myCanvasContext.putImageData(imageData,0,0,0,0, imageData.height, imageData.width);
+    myCanvasContext.putImageData(imageData,0,0,0,0, imgHeight, imgWidth);
 
     // append it to the body
     document.body.appendChild(myCanvas);
@@ -327,11 +329,14 @@
     //img.src = '1Grid.png';
     //img.src = '4Grids.png';
     //img.src = '4Grids 406000 408005.png';
-    img.src = '9Grids 399000 401000.png';
+    //img.src = '9Grids 399000 401000.png';
+    //img.src = 'OSMAP2.png';
     //img.src = '9Grids 406000 408005.png';
     //img.src = 'Screen Shot 2016-03-01 at 3.21.33 pm.png'; //405005 410005
     //img.src = 'Screen Shot 2016-03-01 at 5.14.05 pm.png'; //419000 402000
     //img.src = 'Screen Shot 2016-03-01 at 3.21.33 pm.png'; //405005 410005
+    //img.src = 'Screen Shot 2016-03-03 at 3.49.46 pm.png'; //eastings=401000,northings=389000
+    img.src = 'Screen Shot 2016-03-03 at 3.58.48 pm.png'; //eastings=401000,northings=389000
     //img.src = "Screen Shot 2016-02-24 at 4.12.51 pm.png";    
     //img.src = "Screen Shot 2016-02-25 at 10.53.04 pm.png";   
     //img.src = "Screen Shot 2016-02-26 at 8.41.20 pm.png";
@@ -350,8 +355,8 @@
   var lonlat;
   function pixel2mapPoint()
   {
-    var originalX = 399000; // input
-    var originalY = 401000; // input
+    var originalX = 401000; // input
+    var originalY = 389000; // input
     var pixelWidth = imgWidth;
     var pixelHeight = imgHeight;
     imgSize = imgWidth*imgHeight;
