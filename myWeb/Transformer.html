@@ -18,9 +18,11 @@
   </script>
   <script type="text/javascript" src="FileSaver.js">
   </script>
+
   <body>
   <div id="Gmap"></div>
   </body>
+
   <script type="text/javascript">
   initOSMap();
 
@@ -30,6 +32,7 @@
   var imgWidth;
   var imgHeight;
   var imgSize;
+
   function createCanvas(image){
 
     // create a new canvas element
@@ -118,6 +121,9 @@
           queue[queue.length] = index;
           var point;
 
+          /*
+          !!!!!!!!!!!! This part of code can be improved since ORDER MATTERS !!!!!!!!!!!!!!!
+          */
           while (queue.length != 0)
           {
             point = queue[0]; // set the latest update as target point
@@ -329,9 +335,10 @@
     //img.src = '1Grid.png'; //upLeft   = 399000,400000
     //img.src = '4Grids.png';
     //img.src = '4Grids 406000 408005.png';
-    //img.src = '9Grids 399000 401000.png';
+    img.src = '9Grids 399000 401000.png';
     //img.src = 'OSMAP2.png';
-    img.src = '9Grids 405000 409995.png';
+    //img.src = '9Grids 405000 409995.png';
+    //img.src = 'Screen Shot 2016-03-04 at 12.03.03 am.png'; //eastings=401000,northings=370000
     //img.src = 'Screen Shot 2016-03-01 at 3.21.33 pm.png'; //405005 410005
     //img.src = 'Screen Shot 2016-03-01 at 5.14.05 pm.png'; //419000 402000
     //img.src = 'Screen Shot 2016-03-01 at 3.21.33 pm.png'; //405005 410005
@@ -357,8 +364,8 @@
   var lonlat;
   function pixel2mapPoint()
   {
-    var originalX = 405000; // input
-    var originalY = 409995; // input
+    var originalX = 399000; // input
+    var originalY = 401000; // input
     var pixelWidth = imgWidth;
     var pixelHeight = imgHeight;
     imgSize = imgWidth*imgHeight;
@@ -410,7 +417,7 @@
             path: footpathCoordinates,
             geodesic: true,
             strokeColor: '#FF0000',
-            strokeOpacity: 0.5,
+            strokeOpacity: 1,
             strokeWeight: 2
             });
 
