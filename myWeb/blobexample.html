@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My OS Map</title>
+<script type="text/javascript"
+  src="FileSaver.js">
+</script>
+</head>  
+
+
+<script type="text/javascript">
+	function blobTest(){
+		var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+		saveAs(blob, "hello world.txt");		
+	}
+
+</script>
+
+<body onload = "blobTest()"></body>
+</html>
