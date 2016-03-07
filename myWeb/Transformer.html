@@ -25,6 +25,43 @@
 
   <body>
   <div id="Gmap"></div>
+  <!--
+  FileInput Credit for:
+  http://www.htmlgoodies.com/beyond/javascript/read-text-files-using-the-javascript-filereader.html#fbid=PBxGTbwApc_
+  https://www.w3.org/TR/FileAPI/
+  -->
+  <input type="file" id="fileinput" />
+    <script type="text/javascript">
+    // Check for the various File API support.
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      function readSingleFile(evt) {
+        //Retrieve the first (and only!) File from the FileList object
+        var f = evt.target.files[0]; 
+
+        if (f) {
+          var r = new FileReader();
+          r.onload = function(e) { 
+            var contents = e.target.result;
+            alert( "Got the file\n" 
+                  +"name: " + f.name + "\n"
+                  +"type: " + f.type + "\n"
+                  +"size: " + f.size + " bytes\n"
+                  + "starts with: " + contents.substr()
+            );  
+          }
+          r.readAsText(f);
+        } 
+        else { 
+          alert("Failed to load file");
+        }
+      }
+
+      document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
+    } 
+    else {
+      alert('The File APIs are not fully supported by your browser.');
+    }
+    </script>
   </body>
 
   <script type="text/javascript">
