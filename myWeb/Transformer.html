@@ -30,7 +30,6 @@
   http://www.htmlgoodies.com/beyond/javascript/read-text-files-using-the-javascript-filereader.html#fbid=PBxGTbwApc_
   https://www.w3.org/TR/FileAPI/
   -->
-  <!--<input type="file" id="fileinput" oninput="loadCoordinateFromFile()"></input>-->
   <input type="file" id="fileinput">
     <script type="text/javascript">
       loadCoordinateFromFile();
@@ -123,6 +122,12 @@
       }
     } // end of PART 1: colout filtering
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! BUG: height>width !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    /* 
+    ------------------------------ PART 2------------------------------
+    Blob Finding / Pixel Counting Processes.
+    Count numbers of pixels within Blobs.
+    */    
     for (j=0; j<imageData.width; j++)
     {
       for (i=0; i<imageData.height; i++)
@@ -139,9 +144,6 @@
           queue[queue.length] = index;
           var point;
 
-          /*
-          !!!!!!!!!!!! This part of code can be improved since ORDER MATTERS !!!!!!!!!!!!!!!
-          */
           while (queue.length != 0)
           {
             point = queue[0]; // set the latest update as target point
@@ -266,6 +268,7 @@
   
           } // while (queue.length != 0) 
           //======================================TESTED========================================
+          // end of PART 2.1: Blob Finding
 
           //document.write("end list " + list.length + "\t");   
           if (maxLLength == undefined)
@@ -332,8 +335,14 @@
     // append it to the body
     document.body.appendChild(myCanvas);
   }
+  // end of PART 2; end of image processing
 
-  //TODO: Need to write a function to hide the processed image
+  /* 
+  ------------------------------ PART 3------------------------------
+  Pixel Coordinates Calculation
+  Convert MapPoint to LonLat
+  Mapping
+  */  
   function mapPoint2lonlat(point)
   {
     return point2lonlat(point);
@@ -347,13 +356,12 @@
   var lonlat;
   function pixel2mapPoint()
   {
-    //var easting = parseFloat(getEasting4Trans());
-    //var northing = parseFloat(getNorthing4Trans());
     var originalX = parseFloat(getEasting4Trans()); // input
     var originalY = parseFloat(getNorthing4Trans()); // input
     //var originalX = 397985; // input
     //var originalY = 411998.125; // input  
-    //document.write(typeof(originalX) + ": " + originalX + "/" + typeof(originalY) + ": " + originalY);      
+    /* dont use this line, it causes BUG!!
+    document.write(typeof(originalX) + ": " + originalX + "/" + typeof(originalY) + ": " + originalY); */
     var pixelWidth = imgWidth;
     var pixelHeight = imgHeight;
     imgSize = imgWidth*imgHeight;
@@ -381,7 +389,6 @@
   
   function plotLonlat2Gmap()
   {
-    //file=fopen("newfile.txt");
     try{
         var mapDiv = document.getElementById('Gmap');
         var GMAP = new google.maps.Map(mapDiv, {
@@ -411,10 +418,9 @@
 
           footpathFragment.setMap(GMAP);
         }
-        //google.maps.event.addDomListener(window, "load", initGMap);
       }
     catch(e){
-      error(e, "plotLonlat2Gmap");
+      error(e, "Transformer.plotLonlat2Gmap");
     }
   }
 

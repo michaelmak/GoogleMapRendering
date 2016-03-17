@@ -10,6 +10,7 @@ var ULeftCoodinate;
 var easting4Trans;
 var northing4Trans; 
 
+// alert error and function message
 function error(e, s){
     alert(e+" in "+s);
 }
@@ -28,7 +29,7 @@ function initOSMap()
 		osMap.setCenter(focusPoint, 8);    
 	}
     catch(e){
-		error(e, "initOSMap");
+		error(e, "testing.initOSMap");
     }   
 }
 
@@ -41,12 +42,9 @@ function initGMap() {
 	    });
     }
     catch(e){
-		error(e, "initGMap");
+		error(e, "testing.initGMap");
     }
 }
-//google.maps.event.addDomListener(window, "change", initGMap);
-//http://stackoverflow.com/questions/11740663/google-map-api-uncaught-typeerror-cannot-read-property-offsetwidth-of-null
-
 
 // Assign a new markers layer to a variable 
 var markers = new OpenLayers.Layer.Markers("Markers");
@@ -59,7 +57,7 @@ function left()
 		osMap.setCenter(focusPoint, 8);
 	}
     catch(e){
-		error(e, "left");
+		error(e, "testing.left");
     }
 }
 
@@ -71,7 +69,7 @@ function right()
 		osMap.setCenter(focusPoint, 8);
 	}
     catch(e){
-		error(e, "right");
+		error(e, "testing.right");
     }
 }
 
@@ -83,7 +81,7 @@ function up()
 		osMap.setCenter(focusPoint, 8);
 	}
     catch(e){
-		error(e, "up");
+		error(e, "testing.up");
     }
 }
 
@@ -95,7 +93,7 @@ function down()
 		osMap.setCenter(focusPoint, 8);
 	}
     catch(e){
-		error(e, "down");
+		error(e, "testing.down");
     }
 }
 
@@ -110,7 +108,7 @@ function updateLocation()
 		lat = lonlat.lat;		
 	}
     catch(e){
-		error(e, "updateLocation");
+		error(e, "testing.updateLocation");
     }	
 }
 
@@ -126,7 +124,7 @@ function centerValue()
 	    markers.addMarker(marker);
 	}
     catch(e){
-		error(e, "centerValue");
+		error(e, "testing.centerValue");
     }	
 }
 
@@ -142,7 +140,7 @@ function ULeft()
 	    markers.addMarker(marker);
 	}
     catch(e){
-		error(e, "ULeft");
+		error(e, "testing.ULeft");
     }	
 }
 
@@ -159,7 +157,7 @@ function URight()
 	    markers.addMarker(marker);
 	}
     catch(e){
-		error(e, "URight");
+		error(e, "testing.URight");
     }
 
 }
@@ -176,7 +174,7 @@ function BLeft()
 	    markers.addMarker(marker);
     }
     catch(e){
-		error(e, "BLeft");
+		error(e, "testing.BLeft");
     }    
 
 }
@@ -193,7 +191,7 @@ function BRight()
 	    markers.addMarker(marker);
 	}
     catch(e){
-		error(e, "BRight");
+		error(e, "testing.BRight");
     }	
 }
 
@@ -210,7 +208,7 @@ function switchMarker(){
 		}    
 	}
     catch(e){
-		error(e, "switchMarker");
+		error(e, "testing.switchMarker");
     }
 }
 
@@ -220,7 +218,7 @@ function point2LonLat(){
 		document.getElementById("myLonlatCenter").innerHTML = "LonLat Center: lon " + lon + " lat " + lat;
 	}
     catch(e){
-		error(e, "point2lonlat");
+		error(e, "testing.point2lonlat");
     }	
 }
 
@@ -230,10 +228,11 @@ function point2lonlat(point){
 		return lonlat;
 	}
     catch(e){
-		error(e, "point2lonlat(point)");
+		error(e, "testing.point2lonlat(point)");
     }	
 }
 
+// set GMap to the same location as OSMAP
 function syncGMap(){
     try{
     	updateLocation();
@@ -244,17 +243,27 @@ function syncGMap(){
 	    });		
     }
     catch(e){
-		error(e, "syncGMap");
+		error(e, "testing.syncGMap");
     }	
 }
 
+/*
+  FileInput Credit for:
+  http://www.htmlgoodies.com/beyond/javascript/read-text-files-using-the-javascript-filereader.html#fbid=PBxGTbwApc_
+  https://www.w3.org/TR/FileAPI/
+*/
 function saveCoordinate2File(){
-	updateLocation();
-	var X = mapPointX-1000;
-	var Y = mapPointY+2000;
-	//ULeftCoodinate = new OpenSpace.MapPoint(mapPointX-1000, mapPointY+2000);
-	var blobXY = new Blob([X + " " + Y], {type : "text/plain;charset=utf-8"});
-	saveAs(blobXY, "originCoordinate.txt");
+	try{	
+		updateLocation();
+		var X = mapPointX-1000;
+		var Y = mapPointY+2000;
+		//ULeftCoodinate = new OpenSpace.MapPoint(mapPointX-1000, mapPointY+2000);
+		var blobXY = new Blob([X + " " + Y], {type : "text/plain;charset=utf-8"});
+		saveAs(blobXY, "originCoordinate.txt");
+	}
+	catch(e){
+		error(e, "testing.saveCoordinate2File");
+    }
 }
 
 function loadCoordinateFromFile(){
@@ -318,7 +327,7 @@ function loadImage()
 	  downLeft = 399000,399000
 	  downLeft = 400000,399000
 	  */
-	  //img.src = 'screenshot.png';
+	  img.src = 'screenshot.png';
 	  //img.src = '1Grid.png'; //upLeft   = 399000,400000
 	  //img.src = '4Grids.png';
 	  //img.src = '4Grids 406000 408005.png';
@@ -335,13 +344,13 @@ function loadImage()
 	  //img.src = 'Screen Shot 2016-03-03 at 5.29.30 pm.png'; // eastings=400010,northings=400005  
 	  //img.src = "Screen Shot 2016-02-24 at 4.12.51 pm.png";    
 	  //img.src = "Screen Shot 2016-02-25 at 10.53.04 pm.png";   
-	  img.src = "Screen Shot 2016-03-04 at 4.11.12 pm.png"; //eastings=388005,northings=380000
+	  //img.src = "Screen Shot 2016-03-04 at 4.11.12 pm.png"; //eastings=388005,northings=380000
 	  //img.src = "Screen Shot 2016-03-11 at 1.24.36 pm.png";  //410000 425000
 	  //img.src = "Screen Shot 2016-03-11 at 3.02.34 pm.png"; //402005 414000  
 	  //img.src = "Screen Shot 2016-02-26 at 8.41.20 pm.png";
 	  //img.src = "Screen Shot 2016-03-11 at 3.26.17 pm.png"; //397985 411998.125
 	}
 	catch(e){
-		error(e, "loadImage");
+		error(e, "testing.loadImage");
     }
 }
