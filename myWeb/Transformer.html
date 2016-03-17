@@ -30,11 +30,13 @@
   http://www.htmlgoodies.com/beyond/javascript/read-text-files-using-the-javascript-filereader.html#fbid=PBxGTbwApc_
   https://www.w3.org/TR/FileAPI/
   -->
-  <input type="file" id="fileinput" oninput="loadCoordinateFromFile()"></input>
+  <!--<input type="file" id="fileinput" oninput="loadCoordinateFromFile()"></input>-->
+  <input type="file" id="fileinput">
     <script type="text/javascript">
       loadCoordinateFromFile();
       //loadImage();
     </script>
+  </input>
   </body>
 
   <script type="text/javascript">
@@ -46,6 +48,8 @@
   var imgWidth;
   var imgHeight;
   var imgSize;
+  //document.getElementById("fileinput").oninput = function() {loadImage()};
+  //document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
 
   function createCanvas(image){
 
@@ -290,7 +294,6 @@
             list=[];
           } // elseif
           // marked as white colour for footpath element
-          // TODO -- PART 3
           else {
             for (var i = 0; i < list.length; i++) {
               imageData.data[list[i]]=255;
@@ -335,6 +338,7 @@
   {
     return point2lonlat(point);
   }
+
   var GMapCenterLon;
   var GMapCenterLat;
   var mapPointX;
@@ -343,12 +347,13 @@
   var lonlat;
   function pixel2mapPoint()
   {
-    var easting = getEasting4Trans();
-    var northing = getNorthing4Trans();
-    //var originalX = parseFloat(easting); // input
-    //var originalY = parseFloat(northing); // input
-    var originalX = 388005; // input
-    var originalY = 380000; // input    
+    //var easting = parseFloat(getEasting4Trans());
+    //var northing = parseFloat(getNorthing4Trans());
+    var originalX = parseFloat(getEasting4Trans()); // input
+    var originalY = parseFloat(getNorthing4Trans()); // input
+    //var originalX = 397985; // input
+    //var originalY = 411998.125; // input  
+    //document.write(typeof(originalX) + ": " + originalX + "/" + typeof(originalY) + ": " + originalY);      
     var pixelWidth = imgWidth;
     var pixelHeight = imgHeight;
     imgSize = imgWidth*imgHeight;
@@ -373,7 +378,7 @@
     }
     plotLonlat2Gmap();
   }
-
+  
   function plotLonlat2Gmap()
   {
     //file=fopen("newfile.txt");
@@ -406,6 +411,7 @@
 
           footpathFragment.setMap(GMAP);
         }
+        //google.maps.event.addDomListener(window, "load", initGMap);
       }
     catch(e){
       error(e, "plotLonlat2Gmap");
@@ -415,7 +421,7 @@
 
   </script>
 
-  <body onload="loadImage()">
-  </body>
+  <!--<body onload="loadImage()">
+  </body>-->
 
 </html>
